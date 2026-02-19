@@ -48,3 +48,52 @@ cityInput.addEventListener('keypress', (e) => {
         searchBtn.click();
     }
 });
+// script.js
+
+// 1. Conectamos con los elementos del HTML
+const cityInput = document.getElementById('city-input');
+const searchBtn = document.getElementById('search-btn');
+const cityNameDisplay = document.getElementById('city-name');
+const tempDisplay = document.getElementById('temp');
+const descDisplay = document.getElementById('description');
+
+// 2. Función para obtener datos de la API
+async function consultarClima(ciudad) {
+    try {
+        // La variable WEATHER_API_KEY se carga desde tu archivo secrets.js
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${WEATHER_API_KEY}`;
+        
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+
+        // Validamos si la ciudad existe
+        if (datos.cod === "404") {
+            alert("⚠️ Ciudad no encontrada. Intenta con otro nombre.");
+            return;
+        }
+
+        // 3. Mostramos la información en la pantalla
+        cityNameDisplay.innerText = datos.name;
+        tempDisplay.innerText = Math.round(datos.main.temp); // Redondeamos la temperatura
+        descDisplay.innerText = datos.weather[0].description;
+
+    } catch (error) {
+        console.error("Hubo un error:", error);
+    }
+}
+
+// 4. Escuchamos el clic del botón
+searchBtn.addEventListener('click', () => {
+    const ciudad = cityInput.value.trim();
+    if (ciudad) {
+        consultarClima(ciudad);
+    }
+});
+
+// 5. Extra: buscar también al presionar la tecla "Enter"
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        searchBtn.click();
+    }
+});
+
