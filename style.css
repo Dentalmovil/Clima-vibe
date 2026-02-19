@@ -1,0 +1,104 @@
+/* style.css */
+
+/* 1. Configuración básica y fuente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 2. Fondo animado con gradiente */
+body {
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 3. La Tarjeta de Vidrio (Efecto Glassmorphism) */
+.weather-card {
+    background: rgba(255, 255, 255, 0.1); /* Transparencia */
+    backdrop-filter: blur(15px); /* Desenfoque del fondo */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    color: #00d2ff;
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+/* 4. Buscador Estilizado */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    outline: none;
+    padding: 12px 15px;
+    border-radius: 12px;
+    color: white;
+    width: 100%;
+    font-size: 1rem;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+button {
+    background: #00d2ff;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #0095ff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+}
+
+/* 5. Información del Clima */
+.temp-container {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin: 15px 0;
+    display: block;
+}
+
+#city-name {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+#description {
+    text-transform: capitalize;
+    color: #a0a0c0;
+    font-style: italic;
+}
