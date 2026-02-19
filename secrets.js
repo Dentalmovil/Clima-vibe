@@ -1,6 +1,6 @@
 // Este archivo NO se sube a GitHub
 const firebaseConfig = {
-    apiKey: "TU_API_KEY_DE_FIREBASE",
+    apiKey: "AIzaSyBJqoHvQCLg6DgFDD8yk-nkYfY45EDOeGU",
     authDomain: "tu-app.firebaseapp.com",
     projectId: "tu-app-id",
     storageBucket: "tu-app.appspot.com",
