@@ -8,4 +8,4 @@ const firebaseConfig = {
     appId: "1:12345:web:abcde"
 };
 
-const WEATHER_API_KEY = "TU_API_KEY_DE_OPENWEATHER";
+const WEATHER_API_KEY = "8d292860bbf48b031fc71f2c20bfa848";
