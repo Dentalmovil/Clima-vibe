@@ -3,14 +3,26 @@
 // 1. Intentamos obtener la llave de Vercel. 
 // Si no la encuentra, intentamos usar la del archivo local (secrets.js)
 let API_KEY;
+async function obtenerClima(ciudad) {
+    try {
+        // IMPORTANTE: Ahora llamamos a nuestra propia carpeta /api/
+        const respuesta = await fetch(`/api/get-weather?city=${ciudad}`);
+        const datos = await respuesta.json();
 
-try {
-    // Si secrets.js existe (local), usará esa.
-    API_KEY = config.WEATHER_API_KEY; 
-} catch (e) {
-    // Si secrets.js NO existe (Vercel), usará esta cadena que Vercel reemplazará
-    API_KEY = "WEATHER_API_KEY_PLACEHOLDER"; 
+        if (datos.cod === "404") {
+            alert("⚠️ Ciudad no encontrada.");
+            return;
+        }
+
+        // Actualiza tu interfaz (esto se queda igual a como lo tenías)
+        document.querySelector('.temp').textContent = `${Math.round(datos.main.temp)}°C`;
+        document.querySelector('.city').textContent = datos.name;
+
+    } catch (error) {
+        console.error("Error al conectar con la API interna:", error);
+    }
 }
+
 
 // IMPORTANTE: En Vercel, las variables de entorno se manejan distinto en el frontend.
 // Para proyectos simples, lo más directo es que tu función de búsqueda sea así:
