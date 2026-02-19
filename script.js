@@ -1,11 +1,26 @@
 // script.js
 
-// 1. Referencias a los elementos del HTML
-const cityInput = document.getElementById('city-input');
-const searchBtn = document.getElementById('search-btn');
-const cityNameDisplay = document.getElementById('city-name');
-const tempDisplay = document.getElementById('temp');
-const descDisplay = document.getElementById('description');
+// 1. Intentamos obtener la llave de Vercel. 
+// Si no la encuentra, intentamos usar la del archivo local (secrets.js)
+let API_KEY;
+
+try {
+    // Si secrets.js existe (local), usará esa.
+    API_KEY = config.WEATHER_API_KEY; 
+} catch (e) {
+    // Si secrets.js NO existe (Vercel), usará esta cadena que Vercel reemplazará
+    API_KEY = "WEATHER_API_KEY_PLACEHOLDER"; 
+}
+
+// IMPORTANTE: En Vercel, las variables de entorno se manejan distinto en el frontend.
+// Para proyectos simples, lo más directo es que tu función de búsqueda sea así:
+async function obtenerClima(ciudad) {
+    // Si estás en Vercel, usa la variable que configuraste
+    const finalKey = (API_KEY === "WEATHER_API_KEY_PLACEHOLDER") ? 'TU_CLAVE_REAL_AQUI' : API_KEY;
+    
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${finalKey}&units=metric&lang=es`;
+    // ... resto de tu fetch
+}
 
 // 2. Función principal para obtener el clima
 async function consultarClima(ciudad) {
