@@ -9,12 +9,27 @@ const descDisplay = document.getElementById('description');
 
 // 2. Función principal para obtener el clima
 async function consultarClima(ciudad) {
-    try {
-        // La variable WEATHER_API_KEY se toma automáticamente de tu archivo secrets.js
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${WEATHER_API_KEY}`;
-        
-        const respuesta = await fetch(url);
-        const datos = await respuesta.json();
+  try {
+    // 1. Llamamos a nuestra propia API interna (la carpeta que creaste)
+    const respuesta = await fetch(`/api/get-weather?city=${ciudad}`);
+    const datos = await respuesta.json();
+
+    // 2. Si la ciudad no existe, el servidor nos avisará
+    if (datos.cod === "404") {
+      alert("❌ Ciudad no encontrada");
+      return;
+    }
+
+    // 3. Mostramos los datos en tu pantalla
+    cityNamedDisplay.textContent = datos.name;
+    tempDisplay.textContent = `${Math.round(datos.main.temp)}°C`;
+    descDisplay.textContent = datos.weather[0].description;
+
+  } catch (error) {
+    console.error("Error en la conexión:", error);
+  }
+}
+
 
         // Si la ciudad no existe
         if (datos.cod === "404") {
