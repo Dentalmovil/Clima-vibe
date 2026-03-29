@@ -1,67 +1,56 @@
-// Clima-Vibe | Dashboard Corregido 2026
+// Clima-Vibe | Versión Final Segura
 
-// 1. Configuración de API Keys (Detección automática)
-const weatherKey = (typeof WEATHER_API_KEY !== 'undefined') ? WEATHER_API_KEY : "TU_CLAVE_OPENWEATHER_AQUI";
-const mapsKey = (typeof MAPS_KEY !== 'undefined') ? MAPS_KEY : "TU_CLAVE_GOOGLE_AIza_AQUI";
+// --- CONFIGURACIÓN DE LLAVES ---
+// 1. Aquí va la de OpenWeather (32 caracteres, letras y números)
+const weatherKey = (typeof WEATHER_API_KEY !== 'undefined') ? WEATHER_API_KEY : "TU_API_KEY_DE_OPENWEATHER_AQUI";
 
-// 2. Referencias al HTML
+// 2. Aquí va la de Google (Empieza por AIza...)
+const mapsKey = (typeof MAPS_KEY !== 'undefined') ? MAPS_KEY : "TU_API_KEY_DE_GOOGLE_AQUI";
+
+
+// --- ELEMENTOS DE LA INTERFAZ ---
 const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
 const cityNameDisplay = document.getElementById('city-name');
 const tempDisplay = document.getElementById('temp');
 const descDisplay = document.getElementById('description');
 
-// 3. Función principal
+// --- FUNCIÓN PRINCIPAL ---
 async function consultarClima(ciudad) {
     try {
+        // Validación de la clave antes de disparar
+        if (weatherKey.includes("AIza")) {
+            alert("⚠️ Estás usando una clave de Google en lugar de la de OpenWeather.");
+            return;
+        }
+
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${weatherKey}`;
         
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
 
-        // Si la respuesta es exitosa (Código 200 como vimos en tu captura)
         if (datos.cod === 200) {
-            // Nombre de la ciudad
             cityNameDisplay.innerText = datos.name;
-
-            // Temperatura (Redondeada)
             tempDisplay.innerText = `${Math.round(datos.main.temp)}°C`;
-
-            // Descripción en Mayúsculas
             descDisplay.innerText = datos.weather[0].description.toUpperCase();
-
-            // Cambiar color del neón según temperatura (Opcional)
-            if(datos.main.temp < 18) {
-                tempDisplay.style.color = "#00f7ff"; // Frío: Cian
-                tempDisplay.style.textShadow = "0 0 20px #00f7ff";
-            } else {
-                tempDisplay.style.color = "#39ff14"; // Calor: Verde Neón
-                tempDisplay.style.textShadow = "0 0 20px #39ff14";
-            }
-
-            console.log("✅ Datos cargados con éxito para " + datos.name);
+            
+            // Estilo neón dinámico
+            tempDisplay.style.textShadow = datos.main.temp < 15 ? "0 0 20px #00f7ff" : "0 0 20px #39ff14";
         } else {
-            alert("⚠️ Error: " + datos.message);
+            // Esto te dirá si la clave sigue siendo inválida
+            alert("Respuesta de OpenWeather: " + datos.message);
         }
-
     } catch (error) {
-        console.error("Fallo en la conexión:", error);
-        alert("No se pudo conectar con el servidor.");
+        alert("Hubo un problema al conectar con el servidor.");
     }
 }
 
-// 4. Eventos de búsqueda
+// --- EVENTOS ---
 searchBtn.addEventListener('click', () => {
     const ciudad = cityInput.value.trim();
-    if (ciudad) {
-        consultarClima(ciudad);
-    } else {
-        alert("Escribe el nombre de una ciudad.");
-    }
+    if (ciudad) consultarClima(ciudad);
 });
 
 cityInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') searchBtn.click();
 });
-
-
