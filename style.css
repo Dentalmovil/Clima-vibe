@@ -1,104 +1,82 @@
-/* style.css */
-
-/* 1. Configuración básica y fuente */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* 2. Fondo animado con gradiente */
 body {
-    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    height: 100vh;
+    background-color: #0a0a0b;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    height: 100vh;
+    margin: 0;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 3. La Tarjeta de Vidrio (Efecto Glassmorphism) */
-.weather-card {
-    background: rgba(255, 255, 255, 0.1); /* Transparencia */
-    backdrop-filter: blur(15px); /* Desenfoque del fondo */
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 25px;
-    padding: 30px;
-    width: 350px;
+.container {
+    background: #16161a;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
     text-align: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    width: 320px;
+    border: 1px solid #333;
 }
 
-.logo {
-    font-size: 1.8rem;
+h1 {
+    color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff;
     margin-bottom: 20px;
-    letter-spacing: 3px;
-    color: #00d2ff;
-    text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
 }
 
-/* 4. Buscador Estilizado */
 .search-box {
     display: flex;
     gap: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 input {
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
-    outline: none;
-    padding: 12px 15px;
-    border-radius: 12px;
+    background: #1f1f23;
+    border: 1px solid #00f7ff;
+    border-radius: 8px;
+    padding: 10px;
     color: white;
     width: 100%;
-    font-size: 1rem;
-}
-
-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    outline: none;
 }
 
 button {
-    background: #00d2ff;
+    background: #00f7ff;
     border: none;
-    padding: 12px;
-    border-radius: 12px;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #00f7ff;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #0095ff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00f7ff;
 }
 
-/* 5. Información del Clima */
-.temp-container {
-    font-size: 4.5rem;
-    font-weight: 800;
-    margin: 15px 0;
-    display: block;
+.result-card {
+    margin-top: 20px;
 }
 
 #city-name {
     font-size: 1.5rem;
-    margin-bottom: 5px;
+    margin: 5px 0;
+}
+
+.temp-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #39ff14; /* Verde Neón */
+    text-shadow: 0 0 15px #39ff14;
 }
 
 #description {
-    text-transform: capitalize;
-    color: #a0a0c0;
-    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    color: #888;
 }
+
