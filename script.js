@@ -1,48 +1,42 @@
-// Clima-Vibe Logic
+// Clima-Vibe | Configuración de APIs con MAPS_KEY
 
-// 1. Configuración de API Key
-// Reemplaza el texto entre comillas con tu clave real de OpenWeather
-const MI_CLAVE_MANUAL = "TU_API_KEY_AQUÍ"; 
+// 1. Detección de claves (Local vs Producción)
+const weatherKey = (typeof WEATHER_API_KEY !== 'undefined') ? WEATHER_API_KEY : "TU_KEY_OPENWEATHER_AQUI";
+const mapsKey = (typeof MAPS_KEY !== 'undefined') ? MAPS_KEY : "TU_KEY_GOOGLE_AIza_AQUI";
 
-const apiKey = (typeof WEATHER_API_KEY !== 'undefined') ? WEATHER_API_KEY : MI_CLAVE_MANUAL;
-
-// 2. Elementos UI
+// 2. Elementos del Dashboard
 const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
 const cityNameDisplay = document.getElementById('city-name');
 const tempDisplay = document.getElementById('temp');
 const descDisplay = document.getElementById('description');
 
-// 3. Función de consulta
+// 3. Función para obtener el clima
 async function consultarClima(ciudad) {
-    if (!apiKey || apiKey === "TU_API_KEY_AQUÍ") {
-        alert("⚠️ Error: No has configurado la API KEY en script.js");
-        return;
-    }
-
     try {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${apiKey}`;
-        
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${weatherKey}`;
         const respuesta = await fetch(url);
-        
-        if (!respuesta.ok) {
-            throw new Error("Ciudad no encontrada");
-        }
-
         const datos = await respuesta.json();
 
-        // Inyectar datos
+        if (datos.cod === "404") {
+            alert("📍 Ciudad no encontrada. Intenta de nuevo.");
+            return;
+        }
+
+        // Inyectar datos en el HTML
         cityNameDisplay.innerText = datos.name;
         tempDisplay.innerText = `${Math.round(datos.main.temp)}°C`;
-        descDisplay.innerText = datos.weather[0].description;
+        descDisplay.innerText = datos.weather[0].description.toUpperCase();
+
+        // Aquí podrías usar mapsKey para cargar un mapa estático si quisieras
+        console.log("Clave de Google Maps lista para usar:", mapsKey ? "OK" : "Falta");
 
     } catch (error) {
-        console.error("Error:", error);
-        alert("⚠️ Hubo un problema al obtener el clima. Verifica el nombre de la ciudad.");
+        console.error("Error en la conexión:", error);
     }
 }
 
-// 4. Listeners
+// 4. Eventos
 searchBtn.addEventListener('click', () => {
     const ciudad = cityInput.value.trim();
     if (ciudad) consultarClima(ciudad);
