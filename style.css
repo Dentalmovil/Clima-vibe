@@ -14,10 +14,12 @@ body {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 20px #0ff;
+    background: rgba(0, 0, 0, 0.8);
 }
 .neon-text {
     text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
     color: #0ff;
+    font-size: 2.5rem;
 }
 input {
     background: transparent;
@@ -25,6 +27,7 @@ input {
     color: white;
     padding: 10px;
     border-radius: 5px;
+    outline: none;
 }
 button {
     background: #0ff;
@@ -33,4 +36,29 @@ button {
     cursor: pointer;
     font-weight: bold;
     box-shadow: 0 0 10px #0ff;
+    border-radius: 5px;
+    transition: 0.3s;
 }
+button:hover {
+    box-shadow: 0 0 20px #0ff;
+    transform: scale(1.05);
+}
+.result-card {
+    margin-top: 25px;
+    min-height: 100px;
+}
+.credits {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #555;
+    border-top: 1px solid #222;
+    padding-top: 15px;
+}
+.neon-name {
+    color: #0ff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
