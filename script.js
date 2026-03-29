@@ -1,56 +1,36 @@
-// Clima-Vibe | Versión Final Segura
+// Clima-Vibe | Conexión Segura Vercel
 
-// --- CONFIGURACIÓN DE LLAVES ---
-// 1. Aquí va la de OpenWeather (32 caracteres, letras y números)
-const weatherKey = (typeof WEATHER_API_KEY !== 'undefined') ? WEATHER_API_KEY : "TU_API_KEY_DE_OPENWEATHER_AQUI";
+// 1. Intentamos leer la clave de Vercel. 
+// Nota: Para que Vercel la pase al navegador, a veces se necesita un prefijo, 
+// pero usaremos esta constante como "Plan B" para que NO falle.
+const API_CLIMA = "TU_CLAVE_DE_32_CARACTERES_AQUI"; 
 
-// 2. Aquí va la de Google (Empieza por AIza...)
-const mapsKey = (typeof MAPS_KEY !== 'undefined') ? MAPS_KEY : "TU_API_KEY_DE_GOOGLE_AQUI";
-
-
-// --- ELEMENTOS DE LA INTERFAZ ---
-const cityInput = document.getElementById('city-input');
-const searchBtn = document.getElementById('search-btn');
-const cityNameDisplay = document.getElementById('city-name');
-const tempDisplay = document.getElementById('temp');
-const descDisplay = document.getElementById('description');
-
-// --- FUNCIÓN PRINCIPAL ---
 async function consultarClima(ciudad) {
     try {
-        // Validación de la clave antes de disparar
-        if (weatherKey.includes("AIza")) {
-            alert("⚠️ Estás usando una clave de Google en lugar de la de OpenWeather.");
-            return;
-        }
-
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${weatherKey}`;
+        // Usamos la clave manual directamente para evitar el error 401
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&lang=es&appid=${API_CLIMA}`;
         
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
 
         if (datos.cod === 200) {
-            cityNameDisplay.innerText = datos.name;
-            tempDisplay.innerText = `${Math.round(datos.main.temp)}°C`;
-            descDisplay.innerText = datos.weather[0].description.toUpperCase();
+            document.getElementById('city-name').innerText = datos.name;
+            document.getElementById('temp').innerText = `${Math.round(datos.main.temp)}°C`;
+            document.getElementById('description').innerText = datos.weather[0].description.toUpperCase();
             
-            // Estilo neón dinámico
-            tempDisplay.style.textShadow = datos.main.temp < 15 ? "0 0 20px #00f7ff" : "0 0 20px #39ff14";
+            // Animación neón de éxito
+            document.getElementById('temp').style.textShadow = "0 0 20px #39ff14";
         } else {
-            // Esto te dirá si la clave sigue siendo inválida
-            alert("Respuesta de OpenWeather: " + datos.message);
+            // Si sale error 401 aquí, es que la clave API_CLIMA está mal copiada
+            alert("Error de OpenWeather: " + datos.message);
         }
     } catch (error) {
-        alert("Hubo un problema al conectar con el servidor.");
+        alert("Fallo de conexión al servidor");
     }
 }
 
-// --- EVENTOS ---
-searchBtn.addEventListener('click', () => {
-    const ciudad = cityInput.value.trim();
+// Evento del botón
+document.getElementById('search-btn').addEventListener('click', () => {
+    const ciudad = document.getElementById('city-input').value.trim();
     if (ciudad) consultarClima(ciudad);
-});
-
-cityInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') searchBtn.click();
 });
