@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClimaVibe | Tu Clima Aesthetic</title>
+    <title>Clima-Vibe | Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="weather-card">
-            <h1 class="logo">ClimaVibe</h1>
-            
-            <div class="search-box">
-                <input type="text" id="city-input" placeholder="Busca una ciudad...">
-                <button id="search-btn">🔍</button>
-            </div>
-            
-            <div class="weather-info" id="weather-info">
-                <h2 id="city-name">--</h2>
-                <p id="description">Introduce una ciudad</p>
-                <div class="temp-container">
-                    <span id="temp">0</span>°C
-                </div>
-            </div>
+        <h1>Clima-Vibe</h1>
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Escribe una ciudad..." autocomplete="off">
+            <button id="search-btn">BUSCAR</button>
+        </div>
+        <div id="weather-result" class="result-card">
+            <h2 id="city-name">--</h2>
+            <div id="temp" class="temp-display">0°C</div>
+            <p id="description">ESPERANDO DATOS...</p>
         </div>
     </div>
-
     <script src="secrets.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
